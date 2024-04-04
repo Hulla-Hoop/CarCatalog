@@ -11,13 +11,16 @@ package swagger
 import (
 	"encoding/json"
 	"net/http"
+	"regexp"
 )
 
 func InfoGet(w http.ResponseWriter, r *http.Request) {
 
 	regNum := r.URL.Query().Get("regNum")
-	if regNum == "" {
-		http.Error(w, "Bad request", http.StatusBadRequest)
+	if !checkRegNum(regNum) {
+
+		http.Error(w, "Поле regNum содержит некорректные данные", http.StatusBadRequest)
+		return
 	}
 
 	car := RandomCar(regNum)
@@ -30,4 +33,10 @@ func InfoGet(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(d)
+}
+
+func checkRegNum(regNum string) bool {
+	pattern := `^[a-zA-Zа-яА-Я]\d{3}[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я]\d{3}$`
+	match, _ := regexp.MatchString(pattern, regNum)
+	return match
 }

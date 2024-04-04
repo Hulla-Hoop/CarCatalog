@@ -7,18 +7,22 @@ import (
 	"net/http"
 )
 
-func (c *carcatalog) InsertCar(reqId string, regNum []string) error {
+func (c *carcatalog) Insert(reqId string, regNum []string) ([]model.CarDB, error) {
 	c.logger.WithField("carCatalog.InsertCar", reqId).Debug("полученные данные ", regNum)
-
+	var cars []model.CarDB
 	for _, reg := range regNum {
 		car, err := c.get(reqId, reg)
 		if err != nil {
-			return err
+			return nil, err
 		}
-		c.db.Insert(reqId, *car)
+		carDB, err := c.db.Insert(reqId, *car)
+		if err != nil {
+			continue
+		}
+		cars = append(cars, *carDB)
 	}
 
-	return nil
+	return cars, nil
 }
 
 func (c *carcatalog) get(reqId string, regNum string) (*model.Car, error) {

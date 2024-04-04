@@ -19,3 +19,20 @@ type People struct {
 
 	Patronymic string `json:"patronymic,omitempty"`
 }
+
+func (c Car) Convert() *CarDB {
+
+	return &CarDB{
+		RegNum:     c.RegNum,
+		Mark:       c.Mark,
+		Model:      c.Model,
+		Year:       c.Year,
+		Name:       c.Owner.Name,
+		Surname:    c.Owner.Surname,
+		Patronymic: c.Owner.Patronymic,
+	}
+}
+
+type RegNums struct {
+	RegNums []string `json:"regNums"`
+}

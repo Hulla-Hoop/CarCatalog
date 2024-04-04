@@ -2,8 +2,10 @@ package main
 
 import (
 	"carcatalog/internal/REPO/psql"
+	cataloge "carcatalog/internal/endpoint/catalogE"
 	"carcatalog/internal/logger"
 	"carcatalog/internal/service/carcatalog"
+	"net/http"
 
 	"github.com/joho/godotenv"
 )
@@ -20,7 +22,13 @@ func main() {
 	}
 	carcatalog := carcatalog.InitCarCatalog(log, db)
 
-	sl := []string{"A111AA111", "A222AA222", "A333AA333", "A444AA444"}
+	endpoint := cataloge.Init(log, carcatalog)
 
-	carcatalog.InsertCar("1", sl)
+	http.HandleFunc("/insert", endpoint.Insert)
+
+	err = http.ListenAndServe(":8090", nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }

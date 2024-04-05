@@ -5,5 +5,5 @@ import (
 )
 
 type Service interface {
-	Insert(reqId string, regNum []string) ([]model.CarDB, error)
+	Insert(reqId string, regNum []string) ([]model.Car, error)
 }

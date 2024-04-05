@@ -1,6 +1,10 @@
 package model
 
+import "time"
+
 type Car struct {
+	Id int
+
 	RegNum string `json:"regNum"`
 
 	Mark string `json:"mark"`
@@ -20,7 +24,7 @@ type People struct {
 	Patronymic string `json:"patronymic,omitempty"`
 }
 
-func (c Car) Convert() *CarDB {
+func (c Car) CarToCarDB() *CarDB {
 
 	return &CarDB{
 		RegNum:     c.RegNum,
@@ -30,7 +34,11 @@ func (c Car) Convert() *CarDB {
 		Name:       c.Owner.Name,
 		Surname:    c.Owner.Surname,
 		Patronymic: c.Owner.Patronymic,
+		Removed:    false,
+		Created_at: time.Now(),
+		Updated_at: time.Now(),
 	}
+
 }
 
 type RegNums struct {

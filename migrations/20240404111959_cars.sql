@@ -13,6 +13,9 @@ CREATE TABLE cars (
     name text NOT NULL,
     surname text NOT NULL,
     patronymic text,
+    removed boolean DEFAULT false NOT NULL,
+    created_at timestamp with time zone DEFAULT now() NOT NULL,
+    updated_at timestamp with time zone DEFAULT now() NOT NULL,
     PRIMARY KEY (id)
 );
 

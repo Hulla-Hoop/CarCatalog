@@ -26,7 +26,7 @@ func (p *psql) getQuery(reqId string, carDB *model.CarDB) string {
 
 	query := `
 	UPDATE cars 
-	SET`
+	SET `
 
 	if carDB.RegNum != "" {
 		query += fmt.Sprintf("regNum = '%s',", carDB.RegNum)
@@ -50,7 +50,7 @@ func (p *psql) getQuery(reqId string, carDB *model.CarDB) string {
 		query += fmt.Sprintf("patronymic = '%s',", carDB.Patronymic)
 	}
 
-	query = query + fmt.Sprintf("updated_at = '%s',WHERE id = %d returning *;", carDB.Updated_at.Format(time.DateTime), carDB.Id)
+	query = query + fmt.Sprintf("updated_at = '%s' WHERE id = %d returning *;", carDB.Updated_at.Format(time.DateTime), carDB.Id)
 
 	p.logger.WithField("psql.Update", reqId).Debug("Запрос на обновление", query)
 

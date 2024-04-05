@@ -24,7 +24,7 @@ func (c *carcatalog) Delete(reqId string, id string) (*model.Car, error) {
 }
 
 func (c *carcatalog) idCheckAndConvert(reqId string, id string) (int, error) {
-	pattern := `^1[1-9][0-9]*$`
+	pattern := `^[0-9]*$`
 	match, _ := regexp.MatchString(pattern, id)
 	if !match {
 		c.logger.WithField("carCatalog.idCheckAndConvert", reqId).Error("некорректные данные ", id)

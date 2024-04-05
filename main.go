@@ -25,6 +25,8 @@ func main() {
 	endpoint := cataloge.Init(log, carcatalog)
 
 	http.HandleFunc("/insert", endpoint.Insert)
+	http.HandleFunc("/update", endpoint.Update)
+	http.HandleFunc("/delete", endpoint.Delete)
 
 	err = http.ListenAndServe(":8090", nil)
 	if err != nil {

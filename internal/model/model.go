@@ -27,6 +27,7 @@ type People struct {
 func (c Car) CarToCarDB() *CarDB {
 
 	return &CarDB{
+		Id:         c.Id,
 		RegNum:     c.RegNum,
 		Mark:       c.Mark,
 		Model:      c.Model,

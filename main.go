@@ -27,6 +27,7 @@ func main() {
 	http.HandleFunc("/insert", endpoint.Insert)
 	http.HandleFunc("/update", endpoint.Update)
 	http.HandleFunc("/delete", endpoint.Delete)
+	http.HandleFunc("/filter", endpoint.Filter)
 
 	err = http.ListenAndServe(":8090", nil)
 	if err != nil {

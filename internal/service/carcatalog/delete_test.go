@@ -25,7 +25,48 @@ func Test_carcatalog_idCheckAndConvert(t *testing.T) {
 		want    int
 		wantErr bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "one",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId: "1",
+				id:    "1",
+			},
+			want:    1,
+			wantErr: false,
+		},
+		{
+			name: "two",
+			fields: fields{
+				logger: nil,
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId: "1",
+				id:    "2",
+			},
+			want:    2,
+			wantErr: false,
+		},
+		{
+			name: "three",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId: "1",
+				id:    "-3",
+			},
+			want:    0,
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

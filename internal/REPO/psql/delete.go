@@ -14,7 +14,7 @@ func (p *psql) Delete(reqId string, id int) (*model.CarDB, error) {
 
 	p.logger.WithField("psql.Delete", reqId).Debug("Полученные данные", id)
 
-	query := fmt.Sprintf(`UPDATE cars SET removed = true, updated_at = '%s' FROM cars WHERE id = %d returning *;`, time, id)
+	query := fmt.Sprintf(`UPDATE cars SET removed = true, updated_at = '%s' WHERE id = %d returning *;`, time, id)
 
 	p.logger.WithField("psql.Delete", reqId).Debug("Запрос на удаление", query)
 

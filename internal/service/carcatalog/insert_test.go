@@ -23,7 +23,66 @@ func Test_carcatalog_check(t *testing.T) {
 		args   args
 		want   bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "one",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				regNum: "test",
+			},
+			want: true,
+		},
+		{
+			name: "two",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				regNum: "x120xx123",
+			},
+			want: false,
+		},
+		{
+			name: "three",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				regNum: "x120xx1233",
+			},
+			want: true,
+		},
+		{
+			name: "four",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				regNum: "x120xxx123",
+			},
+			want: true,
+		},
+		{
+			name: "five",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				regNum: "xx120xx123",
+			},
+			want: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -32,7 +91,7 @@ func Test_carcatalog_check(t *testing.T) {
 				db:     tt.fields.db,
 				cfg:    tt.fields.cfg,
 			}
-			if got := c.check(tt.args.regNum); got != tt.want {
+			if got := c.check(tt.args.regNum); got == tt.want {
 				t.Errorf("carcatalog.check() = %v, want %v", got, tt.want)
 			}
 		})

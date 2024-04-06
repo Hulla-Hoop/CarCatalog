@@ -25,7 +25,38 @@ func Test_carcatalog_checkcar(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		// TODO: Add test cases.
+		{
+			name: "one",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId: "1",
+				car: &model.Car{
+					Id:   1,
+					Mark: "test",
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "two",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId: "1",
+				car: &model.Car{
+					Id:   1,
+					Mark: "",
+				},
+			},
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

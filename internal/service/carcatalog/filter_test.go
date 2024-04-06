@@ -29,7 +29,91 @@ func Test_carcatalog_checkFilter(t *testing.T) {
 		args   args
 		want   map[string]string
 	}{
-		// TODO: Add test cases.
+		{
+			name: "one",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId:    "1",
+				limit:    "1",
+				offset:   "1",
+				field:    "mark",
+				value:    "Ford",
+				operator: "eq",
+			},
+			want: map[string]string{"limit": "1", "offset": "1", "field": "mark", "value": "Ford", "operator": "eq"},
+		},
+		{
+			name: "two",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId:    "1",
+				limit:    "",
+				offset:   "",
+				field:    "",
+				value:    "",
+				operator: "",
+			},
+			want: map[string]string{},
+		},
+		{
+			name: "three",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId:    "1",
+				limit:    "ad",
+				offset:   "dds",
+				field:    "ds",
+				value:    "er",
+				operator: "tar",
+			},
+			want: map[string]string{"value": "er"},
+		},
+		{
+			name: "four",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId:    "1",
+				limit:    "1",
+				offset:   "1",
+				field:    "",
+				value:    "",
+				operator: "",
+			},
+			want: map[string]string{"limit": "1", "offset": "1"},
+		},
+		{
+			name: "five",
+			fields: fields{
+				logger: logrus.New(),
+				db:     nil,
+				cfg:    nil,
+			},
+			args: args{
+				reqId:    "1",
+				limit:    "-1",
+				offset:   "-31",
+				field:    "model",
+				value:    "1",
+				operator: "eq",
+			},
+			want: map[string]string{"field": "model", "value": "1", "operator": "eq"},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

@@ -19,7 +19,7 @@ func InitDb(logger *logrus.Logger) (*psql, error) {
 	config := config.DbNew()
 
 	dsn := fmt.Sprintf("host=%s user=%s dbname=%s password=%s port=%s sslmode=%s", config.Host, config.User, config.DBName, config.Password, config.Port, config.SSLMode)
-	logger.Info(dsn)
+
 	dB, err := sql.Open("postgres", dsn)
 	if err != nil {
 		return nil, err

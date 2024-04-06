@@ -4,6 +4,7 @@ import (
 	"carcatalog/internal/REPO/psql"
 	"carcatalog/internal/config"
 	cataloge "carcatalog/internal/endpoint/catalogE"
+	middlware "carcatalog/internal/endpoint/midllware"
 	"carcatalog/internal/logger"
 	"carcatalog/internal/service/carcatalog"
 	"net/http"
@@ -38,10 +39,10 @@ func New() *app {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/insert", h.Insert)
-	mux.HandleFunc("/update", h.Update)
-	mux.HandleFunc("/delete", h.Delete)
-	mux.HandleFunc("/filter", h.Filter)
+	mux.HandleFunc("/insert", middlware.ReqID(h.Insert))
+	mux.HandleFunc("/update", middlware.ReqID(h.Update))
+	mux.HandleFunc("/delete", middlware.ReqID(h.Delete))
+	mux.HandleFunc("/filter", middlware.ReqID(h.Filter))
 
 	l.WithField("app.New", "start").Info("эндпоинты готовы")
 

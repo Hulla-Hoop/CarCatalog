@@ -1,0 +1,209 @@
+openapi: 3.0.3
+info:
+  version: v1
+  title: Catalog Api 
+  description: |-
+    Представляет собой простой каталог товаров с возможность получения всех категорий и получения товаров по отдельным категориям. Также аутифицированные пользователи могут добавлять,удалять,обновлять товары и категории.
+  contact:
+    email: shomaaaaaa76@gmail.com
+paths:
+  /insert:
+    post:
+      tags:
+        - catalog
+      summary: Добавление машин
+      description: получает на вход  слайс гос номеров запрашивает по ним информацию и возвращает добавленные объекты
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                regNum:
+                  $ref: '#/components/schemas/regNum'
+      responses:
+        '200':
+          description: Возвращает слайс добавленых объектов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cars'          
+        '500':
+          description: Выводит ошибку
+  /delete:
+    post:
+      tags: 
+      - catalog
+      summary: удаляет машину
+      description: Возращает удаленную машину
+      parameters:
+        - name: id
+          in: query
+          description: id категории
+          required: true
+          schema:
+            type: string
+            default: 
+      responses:
+        '200':
+          description: Возращает удаленную машину
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          description: Пустой параметр id
+        '500':
+          description: Выводит ошибку
+  /update:
+    post:
+      tags: 
+      - catalog
+      summary: обновляет машину
+      description: Возращает обновленную машину
+      parameters:
+        - name: id
+          in: query
+          description: id машины
+          required: true
+          schema:
+            type: string
+            default:
+      requestBody:
+        required: true
+        description: айди не нужно заполнять и не обязательно указывать все поля обновятся только те поля что указаны
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '200':
+          description: Возвращает обновленую запись
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        '400':
+          description:  Пустой параметр id
+        '500':
+          description: Выводит ошибку
+  /filter:
+    post:
+      tags: 
+      - catalog
+      summary: Фильтрация и пагинация
+      description: Возращает список машин удовлетворяющих фильтру, если не указывать параметры то выведет весь список машин
+      parameters:
+        - name: limit
+          in: query
+          description: количество записей на странице(не работает без offset)
+          required: false
+          schema:
+            type: string
+            default:
+        - name: offset
+          in: query
+          description: c какой записи начинается страница(не работает без limit)
+          required: false
+          schema:
+            type: string
+            default:
+        - name: operator
+          in: query
+          description: оператор сравнения field+operator+value(не имеет смысла вводить без field,value)
+          required: false
+          schema:
+            type: string
+            enum:
+              - "eq"
+              - "ne"
+              - "gt"
+              - "ge"
+              - "lt"
+              - "le"
+        - name: value
+          in: query
+          description: значение которому должно соответствовать поле(не имеет смысла вводить без operator,field)
+          required: false
+          schema:
+            type: string
+            default:
+        - name: field
+          in: query
+          description: поле по которому фильтруют записи(не имеет смысла вводить без operator,value)
+          required: false
+          schema:
+            type: string
+            enum:
+              - "regNum"
+              - "mark"
+              - "model"
+              - "year"
+              - "name"
+              - "surname"
+              - "patronymic"
+      responses:
+        '200':
+          description: Возвращает обновленую запись
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cars'
+        '500':
+          description: Выводит ошибку
+components:
+  schemas:
+    Car:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        regNum:
+          type: string
+          description: гос номер машины
+          example: х120хх140
+        mark:
+          type: string
+          description: марка машины
+          example: Lada
+        model:
+          type: string
+          description: модель машины
+          example: х5
+        year:
+          type: integer
+          format: int64
+          description: год машины
+          example: 1999
+        owner:
+          $ref: '#/components/schemas/People'
+    People:
+      type: object
+      properties:
+        name:
+          type: string
+          description: имя водителя
+          example: Олег
+        surname:
+          type: string
+          description: фамилия водителя
+          example: Олегов
+        patronymic:
+          type: string
+          description: отчество водителя
+          example: Олегович
+    cars:
+      type: array
+      items:
+        $ref: '#/components/schemas/Car'
+    regNum:
+      type: array
+      example: 'regNum:[x120xx160,x120xx170,x120xx190]'
+      items:
+        type: string
+        description: гос номера машин
+        example: 'x120xx150'
+      

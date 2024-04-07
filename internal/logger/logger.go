@@ -5,6 +5,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// возвращает логер с нужными параметрами
 func New() *logrus.Logger {
 	logger := logrus.New()
 	rr := formatter.NewGelf("Catalog")

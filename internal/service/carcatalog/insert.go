@@ -33,6 +33,7 @@ func (c *carcatalog) Insert(reqId string, regNum []string) ([]model.Car, error) 
 	return cars, nil
 }
 
+// проверяет валидность рег.номера
 func (c *carcatalog) get(reqId string, regNum string) (*model.Car, error) {
 
 	var car model.Car

@@ -25,6 +25,7 @@ func (c *carcatalog) Filter(reqId string, limit string, offset string, field str
 	return cars, nil
 }
 
+// проверяет валидность параметров фильтрации и возвращает мапу с данными
 func (c *carcatalog) checkFilter(reqId string, limit string, offset string, field string, value string, operator string) map[string]string {
 
 	c.logger.WithField("carCatalog.checkFilter", reqId).Debug("Полученные данные Limit: ", limit, " Offset: ", offset, " Field: ", field, " Value: ", value, " Operator: ", operator)

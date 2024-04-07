@@ -23,6 +23,7 @@ func (c *carcatalog) Delete(reqId string, id string) (*model.Car, error) {
 
 }
 
+// проверяет ID на наличие некорректных даннных и в случае их отсутствия переводит его в int
 func (c *carcatalog) idCheckAndConvert(reqId string, id string) (int, error) {
 	pattern := `^[0-9]*$`
 	match, _ := regexp.MatchString(pattern, id)

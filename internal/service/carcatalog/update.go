@@ -31,6 +31,7 @@ func (c *carcatalog) Update(reqId string, car model.Car, id string) (*model.Car,
 	return &car, nil
 }
 
+// проверяет валидность полей структуры Car в случае несоответствия возвращает ошибку
 func (c *carcatalog) checkcar(reqId string, car *model.Car) error {
 	if car.RegNum != "" {
 		match, err := regexp.MatchString(`^[a-zA-Zа-яА-Я]\d{3}[a-zA-Zа-яА-Я][a-zA-Zа-яА-Я]\d{3}$`, car.RegNum)

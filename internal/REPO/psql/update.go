@@ -22,6 +22,7 @@ func (p *psql) Update(reqId string, car model.Car) (*model.CarDB, error) {
 	return carDB, nil
 }
 
+// генерируем строку запроса на основе не пустых полей структуры CarDB
 func (p *psql) getQuery(reqId string, carDB *model.CarDB) string {
 
 	query := `

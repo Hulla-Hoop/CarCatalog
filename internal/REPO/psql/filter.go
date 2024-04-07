@@ -32,6 +32,7 @@ func (p *psql) Filter(reqId string, filter map[string]string) ([]model.CarDB, er
 	return carDBSL, nil
 }
 
+// генирирует строку запроса на основе полученной мапы которая содержит параметры фильтрации
 func (p *psql) queryFilter(filter map[string]string) string {
 
 	p.logger.WithField("psql.queryFilter", "").Debug("Полученные данные", filter)
